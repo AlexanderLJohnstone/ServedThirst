@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="Easily and quickly check how busy coffee shops and pubs are near you in real time.">
+        <meta name="keywords" content="busy, Busy, pubs, bars, coffee, shops, busy beers, restaurant, quiet, real time, now, near me, how busy, is it busy, search pubs, search coffee">
+        <meta name="author" content="Sandy Johnstone">
+        <title>Served Thirst| Shops</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="icon" href="img/beer-bottle.svg">
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div id="branding">
+                    <img 
+                    src="img/beer.svg" 
+                    alt="Busy Beers Branding"
+                    height=150;
+                    width=150; 
+                    />
+                    <h1>Served Thirst</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="pubs.html">Pubs</a></li>
+                        <li><a href="cafes.html">Cafés</a></li>
+                        <li><a href="shops.html">Shops</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section id="showcase">
+            <div class="container">
+                <h1>Find a quick place to do the weekly shop!</h1>
+                <p>Using real time information from google we can check how busy supermarkets are so that you
+                  can quickly find quiet super-markets to do your shop. We aim to help our users shop quickly to avoid queues
+                and spreading of COVID-19.</p> 
+            </div>
+            <p> Enter your address</p>
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBzTq48rxl6oGZHe-EGOg7zMie_zCjhdU&libraries=places"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        var postal = document.getElementById('txtPostalCode');
+        var options = { types: ['address'] }
+        var autocomplete = new google.maps.places.Autocomplete(postal, options);
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var location = autocomplete.getPlace();
+            geocoder = new google.maps.Geocoder();
+            console.log(location['geometry'])
+            lat = location['geometry']['location'].lat();
+            lng = location['geometry']['location'].lng();
+            var latlng = new google.maps.LatLng(lat, lng);
+            geocoder.geocode({ 'latLng': latlng }, function (results) {
+                for (i = 0; i < results.length; i++) {
+                    for (var j = 0; j < results[i].address_components.length; j++) {
+                        for (var k = 0; k < results[i].address_components[j].types.length; k++) {
+                            if (results[i].address_components[j].types[k] == "postal_code") {
+                                zipcode = results[i].address_components[j].short_name;
+                                postal.value = zipcode;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    }
+</script>
+<input id="txtPostalCode" type="text" size="50" autocomplete="off" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>           
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">  
+    </body>
+
+   </html>
