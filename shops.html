@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!--
+            Make specific to shops
+        -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
         <meta name="description" content="Easily and quickly check how busy coffee shops and pubs are near you in real time.">
         <meta name="keywords" content="busy, Busy, pubs, bars, coffee, shops, busy beers, restaurant, quiet, real time, now, near me, how busy, is it busy, search pubs, search coffee">
         <meta name="author" content="Sandy Johnstone">
-        <title>Served Thirst| Shops</title>
+        <title>Served Thirst | Shops</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="icon" href="img/beer-bottle.svg">
     </head>
     <body>
+          <!-- Header -->
         <header>
             <div class="container">
                 <div id="branding">
@@ -22,6 +26,7 @@
                     />
                     <h1>Served Thirst</h1>
                 </div>
+                <!-- Nav Tags -->
                 <nav>
                     <ul>
                         <li><a href="index.html">Home</a></li>
@@ -32,44 +37,103 @@
                 </nav>
             </div>
         </header>
+        <!-- Top Descriptio -->
         <section id="showcase">
             <div class="container">
                 <h1>Find a quick place to do the weekly shop!</h1>
                 <p>Using real time information from google we can check how busy supermarkets are so that you
                   can quickly find quiet super-markets to do your shop. We aim to help our users shop quickly to avoid queues
                 and spreading of COVID-19.</p> 
-            </div>
-            <p> Enter your address</p>
-            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
-<script type="text/javascript">
-    window.onload = function () {
-        var postal = document.getElementById('txtPostalCode');
-        var options = { types: ['address'] }
-        var autocomplete = new google.maps.places.Autocomplete(postal, options);
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-            var location = autocomplete.getPlace();
-            geocoder = new google.maps.Geocoder();
-            console.log(location['geometry'])
-            lat = location['geometry']['location'].lat();
-            lng = location['geometry']['location'].lng();
-            var latlng = new google.maps.LatLng(lat, lng);
-            geocoder.geocode({ 'latLng': latlng }, function (results) {
-                for (i = 0; i < results.length; i++) {
-                    for (var j = 0; j < results[i].address_components.length; j++) {
-                        for (var k = 0; k < results[i].address_components[j].types.length; k++) {
-                            if (results[i].address_components[j].types[k] == "postal_code") {
-                                zipcode = results[i].address_components[j].short_name;
-                                postal.value = zipcode;
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    }
-</script>
-<input id="txtPostalCode" type="text" size="50" autocomplete="off" />
+                </di>
 
+                <!-- Postcode entry -->
+            <p> Enter your address</p>
+
+            <!-- API KEY -->
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEQR2gFoY1h7q1o7Guc1g6joGrawJDZnQ&libraries=places"></script>
+
+            <!-- Autocomplete Script -->
+            <script type="text/javascript">
+                window.onload = function () {
+                   var postal = document.getElementById('txtPostalCode');
+                   var options = { types: ['address'] }
+                   var autocomplete = new google.maps.places.Autocomplete(postal, options);
+                   google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                        var location = autocomplete.getPlace();
+                        geocoder = new google.maps.Geocoder();
+                        console.log(location['geometry'])
+                        lat = location['geometry']['location'].lat();
+                        lng = location['geometry']['location'].lng();
+                        var latlng = new google.maps.LatLng(lat, lng);
+                        geocoder.geocode({ 'latLng': latlng }, function (results) {
+                         for (i = 0; i < results.length; i++) {
+                            for (var j = 0; j < results[i].address_components.length; j++) {
+                                for (var k = 0; k < results[i].address_components[j].types.length; k++) {
+                                     if (results[i].address_components[j].types[k] == "postal_code") {
+                                         zipcode = results[i].address_components[j].short_name;
+                                         postal.value = zipcode;
+                                     }
+                                 }
+                            }
+                         }
+                    });
+                 });
+             }   
+        </script>
+
+        <script>
+            
+        // /* tests to see if string is in correct UK style postcode: AL1 1AB, BM1 5YZ etc. */
+        // function isValidPostcode(p) {
+    	//     var postcodeRegEx = /[A-Z]{1,2}[A-Z0-9]{1,2} ?[0-9][A-Z]{2}/i;
+	    //     return postcodeRegEx.test(p);
+        // }
+
+        // /* formats a VALID postcode nicely: AB120XY -> AB1 0XY */ 
+        // function formatPostcode(p) { 
+        //     if (isValidPostcode(p)) { 
+        //         var postcodeRegEx = /(^[A-Z]{1,2}[0-9]{1,2})([0-9][A-Z]{2}$)/i; 
+        //         document.getElementById('txtPostalCode').value = p.replace(postcodeRegEx,"$1 $2"); 
+        //     } else {
+        //         document.getElementById('txtPostalCode').value = 'Invalid';
+        //     }
+        // }
+
+        function appendResults () {
+            for(var i = 0; i < 5; i++){
+                var div = document.createElement('div');
+                div.style.backgroundColor = "white";
+                div.style.position = "relative";
+                div.style.border = "black";
+                div.style.borderStyle = "solid";
+                div.style.height = "200px";
+                div.style.width = "80%";
+                div.style.verticalAlign = "bottom";
+                div.style.display = "inline-block"
+                div.style.marginBottom = "25px"
+                div.style.marginTop = "25px"
+
+                var t = document.createTextNode("100%");
+                var x = document.createElement('textHolder');
+                x.appendChild(t);
+                div.appendChild(x);
+                div.children[0].style.position = "absolute";
+                div.children[0].style.right = "1%";
+                div.children[0].style.top = "1%";
+                div.children[0].style.fontSize = "xxx-large";
+                div.children[0].style.color = "red";
+                document.getElementsByTagName('body')[0].appendChild(div);
+            }
+        };
+
+        </script>
+
+        <!-- Postcode inputs -->
+        <input id="txtPostalCode" type="text" size="50" autocomplete="off" />
+        <!-- <input type="button" value="click" onclick="formatPostcode(document.getElementById('txtPostalCode').value)">  -->
+        <input type="button" value="click" onclick="appendResults()"> 
+
+        <!-- Styling scripts and links -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>           
